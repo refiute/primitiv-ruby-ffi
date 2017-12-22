@@ -43,12 +43,13 @@ end
 
 if __FILE__ == $0
 
-	train_inputs = load_images("./data/train-images-idx3-ubyte", NUM_TRAIN_SAMPLES)
-	train_labels = load_labels("./data/train-labels-idx1-ubyte", NUM_TRAIN_SAMPLES)
-	test_inputs = load_images("./data/t10k-images-idx3-ubyte", NUM_TEST_SAMPLES)
-	test_labels = load_labels("./data/t10k-labels-idx1-ubyte", NUM_TEST_SAMPLES)
+	train_inputs = load_images("./examples/mnist/data/train-images-idx3-ubyte", NUM_TRAIN_SAMPLES)
+	train_labels = load_labels("./examples/mnist/data/train-labels-idx1-ubyte", NUM_TRAIN_SAMPLES)
+	test_inputs = load_images("./examples/mnist/data/t10k-images-idx3-ubyte", NUM_TEST_SAMPLES)
+	test_labels = load_labels("./examples/mnist/data/t10k-labels-idx1-ubyte", NUM_TEST_SAMPLES)
 
-	dev = Devices::Naive.new
+	# dev = Devices::Naive.new
+	dev = Devices::CUDA.new 0
 	Device::set_default dev
 	g = Graph.new
 	Graph::set_default g
@@ -83,9 +84,13 @@ if __FILE__ == $0
 	ids = (0..NUM_TRAIN_SAMPLES-1).to_a
 
 	MAX_EPOCH.times do |epoch|
-		ids.shuffle!
+		puts "epoch: #{epoch + 1}"
 
+		ids.shuffle!
+		sum_loss = 0
 		NUM_TRAIN_BATCHS.times do |batch|
+			print "\r\ttrain: #{batch+1}/#{NUM_TRAIN_BATCHS}"
+
 			inputs = Array.new(BATCH_SIZE)
 			labels = Array.new(BATCH_SIZE)
 			BATCH_SIZE.times do |i|
@@ -99,18 +104,22 @@ if __FILE__ == $0
 			y = make_graph(inputs, true)
 			loss = F::softmax_cross_entropy(y, labels, 0)
 			avg_loss = F::Batch::mean(loss)
+			sum_loss += avg_loss.to_f * BATCH_SIZE
 
 			optimizer.reset_gradients
 			avg_loss.backward
 			optimizer.update
 		end
+		puts "\tloss: #{sum_loss/NUM_TRAIN_SAMPLES}"
 
 		match = 0
 		NUM_TEST_BATCHS.times do |batch|
+			print "\r\ttest: #{batch+1}/#{NUM_TEST_BATCHS}"
+
 			inputs = Array.new(BATCH_SIZE)
 			labels = Array.new(BATCH_SIZE)
 			BATCH_SIZE.times do |i|
-				id = ids[i + batch * BATCH_SIZE]
+				id = i + batch * BATCH_SIZE
 				inputs[i] = test_inputs[id]
 				labels[i] = test_labels[id]
 			end
@@ -130,14 +139,14 @@ if __FILE__ == $0
 						argmax = j
 					end
 				end
-				if argmax == test_labels[i + batch + BATCH_SIZE]
+				if argmax == test_labels[i + batch * BATCH_SIZE]
 					match += 1
 				end
 			end
 		end
 
 		accuracy = 100.0 * match / NUM_TEST_SAMPLES
-		puts "epoch #{epoch}: accuracy: #{accuracy}"
+		puts "\taccuracy: #{accuracy}"
 	end
 
 end

@@ -6,7 +6,7 @@ require "./status"
 module Primitiv
 	module Devices
 		extend FFI::Library
-		ffi_lib "libprimitiv_c.dylib"
+		ffi_lib "libprimitiv_c.so"
 
 		class Naive < Primitiv::Device
 			def self.release(ptr)
@@ -19,10 +19,10 @@ module Primitiv
 				super seed if seed.is_a?(FFI::Pointer)
 
 				status = Primitiv::Status.new
-				if seed.is_a?(Integer)
-					ptr = Primitiv::Devices::safe_primitiv_Naive_new_with_seed(seed, status)
-				elsif seed == nil
+				if seed == nil
 					ptr = Primitiv::Devices::safe_primitiv_Naive_new(status)
+				elsif seed.is_a?(Integer)
+					ptr = Primitiv::Devices::safe_primitiv_Naive_new_with_seed(seed, status)
 				else
 					raise ArgumentError
 				end

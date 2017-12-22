@@ -2,7 +2,7 @@ require 'ffi'
 
 module Primitiv
 	extend FFI::Library
-	ffi_lib "libprimitiv_c.dylib"
+	ffi_lib "libprimitiv_c.so"
 
 	Code = enum(:OK,
 							:ERROR,

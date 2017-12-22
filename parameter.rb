@@ -8,7 +8,7 @@ require './type'
 
 module Primitiv
 	extend FFI::Library
-	ffi_lib "libprimitiv_c.dylib"
+	ffi_lib "libprimitiv_c.so"
 
 	class Parameter < FFI::AutoPointer
 		def self.release(ptr)

@@ -3,7 +3,7 @@ require './shape'
 
 module Primitiv
 	extend FFI::Library
-	ffi_lib "libprimitiv_c.dylib"
+	ffi_lib "libprimitiv_c.so"
 
 	class Node < FFI::AutoPointer
 		def self.release(ptr)

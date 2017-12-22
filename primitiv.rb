@@ -1,4 +1,5 @@
 require './devices/naive'
+require './devices/cuda'
 require './graph'
 require './model'
 require './parameter'

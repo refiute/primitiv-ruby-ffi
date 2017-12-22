@@ -7,7 +7,7 @@ require './tensor'
 module Primitiv
 	module Functions
 		extend FFI::Library
-		ffi_lib "libprimitiv_c.dylib"
+		ffi_lib "libprimitiv_c.so"
 
 		public
 		def self.add(left, right)
@@ -330,7 +330,7 @@ module Primitiv
 
 		module Batch
 			extend FFI::Library
-			ffi_lib "libprimitiv_c.dylib"
+			ffi_lib "libprimitiv_c.so"
 
 			def self.mean(x)
 				status = Primitiv::Status.new

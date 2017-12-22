@@ -6,7 +6,7 @@ require "./status"
 module Primitiv
 	module Devices
 		extend FFI::Library
-		ffi_lib "libprimitiv_c.dylib"
+		ffi_lib "libprimitiv_c.so"
 
 		class CUDA < Primitiv::Device
 			def self.release(ptr)
@@ -15,18 +15,22 @@ module Primitiv
 				status.into_result
 			end
 
-			def initializer(device_id, rng_seed = nil)
+			def initialize(device_id, rng_seed = nil)
 				super device_id if device_id.is_a?(FFI::Pointer)
+				raise ArgumentError if not device_id.is_a?(Integer)
 
 				status = Primitiv::Status.new
-				if seed == nil
+				if rng_seed == nil
 					ptr = Primitiv::Devices::safe_primitiv_CUDA_new(device_id, status)
-				else
+				elsif rng_seed.is_a?(Integer)
 					ptr = Primitiv::Devices::safe_primitiv_CUDA_new_with_seed(
 						device_id, rng_seed, status)
+				else
+					raise ArgumentError
 				end
 				status.into_result
-				return ptr
+
+				super ptr
 			end
 		end
 

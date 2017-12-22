@@ -11,6 +11,7 @@ include Primitiv
 if __FILE__ == $0
 
 	dev = Devices::Naive.new
+	# dev = Devices::CUDA.new(0)
 	Device::set_default dev
 
 	g = Graph.new

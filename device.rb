@@ -4,7 +4,7 @@ require "./status"
 
 module Primitiv
 	extend FFI::Library
-	ffi_lib "libprimitiv_c.dylib"
+	ffi_lib "libprimitiv_c.so"
 
 	class Device < FFI::AutoPointer
 		def self.get_default

@@ -5,7 +5,7 @@ require "./optimizer"
 module Primitiv
 	module Optimizers
 		extend FFI::Library
-		ffi_lib "libprimitiv_c.dylib"
+		ffi_lib "libprimitiv_c.so"
 
 		class SGD < Primitiv::Optimizer
 			def self.release(ptr)
