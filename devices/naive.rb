@@ -6,7 +6,7 @@ require "./status"
 module Primitiv
 	module Devices
 		extend FFI::Library
-		ffi_lib "libprimitiv_c.so"
+		ffi_lib "primitiv_c"
 
 		class Naive < Primitiv::Device
 			def self.release(ptr)

@@ -6,7 +6,7 @@ require './initializer'
 module Primitiv
 	module Initializers
 		extend FFI::Library
-		ffi_lib "libprimitiv_c.so"
+		ffi_lib "primitiv_c"
 
 		class Constant < Primitiv::Initializer
 			def self.release(ptr)
