@@ -1,8 +1,9 @@
 require 'ffi'
-require './status'
-require './shape'
-require './device'
-require './initializer'
+
+require_relative 'status'
+require_relative 'shape'
+require_relative 'device'
+require_relative 'initializer'
 
 require './type'
 

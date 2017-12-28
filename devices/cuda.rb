@@ -1,7 +1,7 @@
 require 'ffi'
 
-require "./device"
-require "./status"
+require_relative "../device"
+require_relative "../status"
 
 module Primitiv
 	module Devices

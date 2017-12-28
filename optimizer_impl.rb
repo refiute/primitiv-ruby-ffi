@@ -1,6 +1,7 @@
 require 'ffi'
-require "./status"
-require "./optimizer"
+
+require_relative "status"
+require_relative "optimizer"
 
 module Primitiv
 	module Optimizers

@@ -1,4 +1,4 @@
-require './shape'
+require_relative 'shape'
 
 def normShape(shapelike)
 	if shapelike.is_a?(Primitiv::Shape)

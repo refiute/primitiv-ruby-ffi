@@ -1,6 +1,6 @@
 require 'ffi'
 
-require './status'
+require_relative 'status'
 
 module Primitiv
 	extend FFI::Library

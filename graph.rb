@@ -1,5 +1,5 @@
-require './status'
-require './shape'
+require_relative 'status'
+require_relative 'shape'
 
 module Primitiv
 	extend FFI::Library

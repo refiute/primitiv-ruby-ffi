@@ -1,7 +1,7 @@
 require 'ffi'
 
-require './status'
-require './initializer'
+require_relative 'status'
+require_relative 'initializer'
 
 module Primitiv
 	module Initializers

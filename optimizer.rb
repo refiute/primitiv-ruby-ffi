@@ -1,6 +1,7 @@
 require 'ffi'
-require './parameter'
-require './status'
+
+require_relative 'parameter'
+require_relative 'status'
 
 module Primitiv
 	class Optimizer < FFI::AutoPointer

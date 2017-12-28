@@ -1,8 +1,8 @@
 require 'ffi'
 
-require './status'
-require './graph'
-require './tensor'
+require_relative 'status'
+require_relative 'graph'
+require_relative 'tensor'
 
 module Primitiv
 	module Functions
